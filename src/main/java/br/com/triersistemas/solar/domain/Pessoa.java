@@ -1,38 +1,43 @@
 package br.com.triersistemas.solar.domain;
 
+import br.com.triersistemas.solar.helper.StringUtils;
+
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.SplittableRandom;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class Pessoa {
+
+    private UUID id;
     private String nome;
     private LocalDate aniver;
 
     protected Pessoa() {
+        this.id = UUID.randomUUID();
         this.aniver = LocalDate.now();
-        List<String> nomes = new ArrayList<>();
-        nomes.add("Alexson");
-        nomes.add("Ana");
-        nomes.add("Murilo");
-        nomes.add("Matias");
-        nomes.add("Vinicius");
-        nomes.add("Guilherme");
-        nomes.add("João Paulo");
-        nomes.add("Julio");
-        nomes.add("Gabriel");
-        nomes.add("Edward");
-        var rd = new SplittableRandom();
-        this.nome = nomes.get(rd.nextInt(0, nomes.size()));
+        this.nome = StringUtils.getRandomName();
     }
 
     protected Pessoa(final String nome, final LocalDate aniver) {
+        this();
         this.nome = nome;
         this.aniver = aniver;
+    }
+
+    protected Pessoa editar(final String nome, final LocalDate aniver) {
+        this.nome = nome;
+        this.aniver = aniver;
+        return this;
+    }
+
+    public UUID getId() {
+        return id;
     }
 
     public String getNome() {
@@ -78,24 +83,5 @@ public abstract class Pessoa {
         return resto > 9 ? 0 : resto;
     }
 
-    protected String extractNumbers(final String documento) {
-        if (Objects.nonNull(documento)) {
-            return documento.replaceAll("\\D+", "");
-        }
-        return "";
-    }
 
-    protected List<Integer> toListInteger(final String documento) {
-        final var digitos = new ArrayList<Integer>();
-        for (char item : extractNumbers(documento).toCharArray()) {
-            digitos.add(Integer.parseInt(String.valueOf(item)));
-        }
-        return digitos;
-    }
-
-    protected String listToString(final List<Integer> digitos) {
-        return digitos.stream()
-                .map(Object::toString)
-                .reduce("", (p, e) -> p + e);
-    }
 }

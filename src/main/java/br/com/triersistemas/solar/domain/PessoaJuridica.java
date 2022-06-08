@@ -1,5 +1,7 @@
 package br.com.triersistemas.solar.domain;
 
+import br.com.triersistemas.solar.helper.StringUtils;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -13,17 +15,22 @@ public abstract class PessoaJuridica extends Pessoa {
 
     protected PessoaJuridica(final String nome, final LocalDate aniver, final String cnpj) {
         super(nome, aniver);
-        this.cnpj = super.extractNumbers(cnpj);
+        this.cnpj = StringUtils.extractNumbers(cnpj);
+    }
+
+    public void editar(final String nome, final LocalDate aniver, final String cnpj) {
+        super.editar(nome, aniver);
+        this.cnpj = cnpj;
     }
 
     public String geraCnpj(final List<Integer> digitos) {
         digitos.add(this.mod11(digitos, 6,7,8,9,2,3,4,5,6,7,8,9));
         digitos.add(this.mod11(digitos, 5,6,7,8,9,2,3,4,5,6,7,8,9));
-        return listToString(digitos);
+        return StringUtils.listToString(digitos);
     }
     @Override
     public Boolean getDocumentoValido() {
-        var documento = toListInteger(this.cnpj);
+        var documento = StringUtils.toListInteger(this.cnpj);
         if (documento.size() == 14 && documento.stream().distinct().count() > 1) {
             return geraCnpj(documento.subList(0, 12)).equals(this.cnpj);
         }
