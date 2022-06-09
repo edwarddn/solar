@@ -1,7 +1,9 @@
 package br.com.triersistemas.solar.controller;
 
+import br.com.triersistemas.solar.domain.Cliente;
 import br.com.triersistemas.solar.domain.Farmaceutico;
 import br.com.triersistemas.solar.exceptions.NaoExisteException;
+import br.com.triersistemas.solar.model.ClienteModel;
 import br.com.triersistemas.solar.model.FarmaceuticoModel;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,42 +12,35 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/farmaceutico")
-public class FarmaceuticoController {
+@RequestMapping("/cliente")
+public class ClienteController {
 
-    public static final List<Farmaceutico> LIST = new ArrayList<>();
+    public static final List<Cliente> LIST = new ArrayList<>();
 
     @GetMapping("/consultar")
-    public List<Farmaceutico> consultar() {
+    public List<Cliente> consultar() {
         return LIST;
     }
 
-    @PostMapping("/cadastrar-randon")
-    public Farmaceutico cadastrarRandon() {
-        final var f = new Farmaceutico();
-        LIST.add(f);
-        return f;
-    }
-
     @PostMapping("/cadastrar")
-    public Farmaceutico cadastrar(@RequestBody FarmaceuticoModel model) {
-        var f = new Farmaceutico(model.getNome(), model.getAniver(), model.getCpf());
-        LIST.add(f);
-        return f;
+    public Cliente cadastrar(@RequestBody ClienteModel model) {
+        var domain = new Cliente(model.getNome(), model.getAniver(), model.getCpf(), model.getEmail());
+        LIST.add(domain);
+        return domain;
     }
 
     @PutMapping("/alterar/{id}")
-    public Farmaceutico remover(@PathVariable UUID id, @RequestBody FarmaceuticoModel model) {
+    public Cliente remover(@PathVariable UUID id, @RequestBody ClienteModel model) {
         var domain = LIST.stream()
                 .filter(x -> x.getId().equals(id))
                 .findFirst()
                 .orElseThrow(NaoExisteException::new);
-        domain.editar(model.getNome(), model.getAniver(), model.getCpf());
+        domain.editar(model.getNome(), model.getAniver(), model.getCpf(), model.getEmail());
         return domain;
     }
 
     @DeleteMapping("/remover/{id}")
-    public Farmaceutico remover(@PathVariable UUID id) {
+    public Cliente remover(@PathVariable UUID id) {
         var domain = LIST.stream()
                 .filter(x -> x.getId().equals(id))
                 .findFirst()

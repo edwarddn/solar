@@ -13,7 +13,7 @@ import java.util.UUID;
 @RequestMapping("/fornecedor")
 public class FornecedorController {
 
-    private static final List<Fornecedor> LIST = new ArrayList<>();
+    public static final List<Fornecedor> LIST = new ArrayList<>();
 
     @GetMapping("/consultar")
     public List<Fornecedor> consultar() {
@@ -21,34 +21,36 @@ public class FornecedorController {
     }
 
     @PostMapping("/cadastrar-randon")
-    public List<Fornecedor> cadastrarRandon() {
-        LIST.add(new Fornecedor());
-        return LIST;
+    public Fornecedor cadastrarRandon() {
+        var f = new Fornecedor();
+        LIST.add(f);
+        return f;
     }
 
     @PostMapping("/cadastrar")
-    public List<Fornecedor> cadastrar(@RequestBody FornecedorModel model) {
-        LIST.add(new Fornecedor(model.getNome(), model.getAniver(), model.getCnpj()));
-        return LIST;
+    public Fornecedor cadastrar(@RequestBody FornecedorModel model) {
+        var f = new Fornecedor(model.getNome(), model.getAniver(), model.getCnpj());
+        LIST.add(f);
+        return f;
     }
 
-    @DeleteMapping("/alterar/{id}")
-    public List<Fornecedor> remover(@PathVariable UUID id, @RequestBody FornecedorModel model) {
+    @PutMapping("/alterar/{id}")
+    public Fornecedor remover(@PathVariable UUID id, @RequestBody FornecedorModel model) {
         var domain = LIST.stream()
                 .filter(x -> x.getId().equals(id))
                 .findFirst()
                 .orElseThrow(NaoExisteException::new);
         domain.editar(model.getNome(), model.getAniver(), model.getCnpj());
-        return LIST;
+        return domain;
     }
 
     @DeleteMapping("/remover/{id}")
-    public List<Fornecedor> remover(@PathVariable UUID id) {
+    public Fornecedor remover(@PathVariable UUID id) {
         var domain = LIST.stream()
                 .filter(x -> x.getId().equals(id))
                 .findFirst()
                 .orElseThrow(NaoExisteException::new);
         LIST.remove(domain);
-        return LIST;
+        return domain;
     }
 }
