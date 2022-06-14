@@ -5,6 +5,8 @@ import br.com.triersistemas.solar.exceptions.NaoExisteException;
 import br.com.triersistemas.solar.model.AdicionarPedidoModel;
 import br.com.triersistemas.solar.model.PagarPedidoModel;
 import br.com.triersistemas.solar.model.PedidoModel;
+import br.com.triersistemas.solar.service.ProdutoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -15,6 +17,9 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/pedido")
 public class PedidoController {
+
+    @Autowired
+    private ProdutoService produtoService;
 
     public static final List<Pedido> LIST = new ArrayList<>();
 
@@ -51,10 +56,7 @@ public class PedidoController {
         var produtos = model.getIdProdutos()
                 .stream()
                 .map(idProduto -> {
-                    return ProdutoController.LIST.stream()
-                            .filter(x -> x.getId().equals(idProduto))
-                            .findFirst()
-                            .orElseThrow(NaoExisteException::new);
+                    return produtoService.consultar(idProduto);
                 }).collect(Collectors.toList());
 
         return pedido.adicionarProdutos(produtos);
