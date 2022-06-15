@@ -10,8 +10,12 @@ import java.util.UUID;
 
 public interface PedidoService {
     List<Pedido> consultar();
+
     Pedido consultar(UUID id);
+
     Pedido cadastrar(PedidoModel model);
+
     Pedido adicionarProdutos(UUID id, AdicionarPedidoModel model);
+
     Pedido pagar(UUID id, PagarPedidoModel model);
 }

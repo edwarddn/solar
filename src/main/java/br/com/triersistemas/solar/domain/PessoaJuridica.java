@@ -25,10 +25,11 @@ public abstract class PessoaJuridica extends Pessoa {
     }
 
     public String geraCnpj(final List<Integer> digitos) {
-        digitos.add(this.mod11(digitos, 6,7,8,9,2,3,4,5,6,7,8,9));
-        digitos.add(this.mod11(digitos, 5,6,7,8,9,2,3,4,5,6,7,8,9));
+        digitos.add(this.mod11(digitos, 6, 7, 8, 9, 2, 3, 4, 5, 6, 7, 8, 9));
+        digitos.add(this.mod11(digitos, 5, 6, 7, 8, 9, 2, 3, 4, 5, 6, 7, 8, 9));
         return StringUtils.listToString(digitos);
     }
+
     @Override
     public Boolean getDocumentoValido() {
         var documento = StringUtils.toListInteger(this.cnpj);

@@ -24,26 +24,26 @@ public class BaseRepositoryImpl<ID, T> implements BaseRepository<ID, T> {
     }
 
     @Override
-    public Optional<T> consultar(ID id) {
+    public Optional<T> consultar(final ID id) {
         return list.stream().filter(x -> id.equals(this.getId(x))).findFirst();
     }
 
     @Override
-    public List<T> consultar(List<ID> ids) {
+    public List<T> consultar(final List<ID> ids) {
         return ids.stream().map(id -> consultar(id).orElseThrow(NaoExisteException::new)).toList();
     }
 
     @Override
-    public void cadastrar(T domain) {
+    public void cadastrar(final T domain) {
         list.add(domain);
     }
 
     @Override
-    public void remover(T domain) {
+    public void remover(final T domain) {
         list.remove(domain);
     }
 
-    private ID getId(T x) {
+    private ID getId(final T x) {
         try {
             return (ID) x.getClass().getMethod("getId").invoke(x);
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException ex) {
