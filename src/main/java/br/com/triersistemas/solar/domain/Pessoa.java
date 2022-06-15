@@ -2,11 +2,7 @@ package br.com.triersistemas.solar.domain;
 
 import br.com.triersistemas.solar.helper.StringUtils;
 
-import java.sql.Timestamp;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;

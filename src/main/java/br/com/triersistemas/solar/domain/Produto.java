@@ -1,6 +1,5 @@
 package br.com.triersistemas.solar.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.math.BigDecimal;

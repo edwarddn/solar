@@ -18,9 +18,10 @@ public abstract class PessoaJuridica extends Pessoa {
         this.cnpj = StringUtils.extractNumbers(cnpj);
     }
 
-    public void editar(final String nome, final LocalDate aniver, final String cnpj) {
+    public PessoaJuridica editar(final String nome, final LocalDate aniver, final String cnpj) {
         super.editar(nome, aniver);
         this.cnpj = cnpj;
+        return this;
     }
 
     public String geraCnpj(final List<Integer> digitos) {

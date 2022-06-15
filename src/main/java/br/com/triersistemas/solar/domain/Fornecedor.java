@@ -3,9 +3,7 @@ package br.com.triersistemas.solar.domain;
 import br.com.triersistemas.solar.helper.StringUtils;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.SplittableRandom;
 
 public class Fornecedor extends PessoaJuridica {
 

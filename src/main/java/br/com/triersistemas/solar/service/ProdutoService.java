@@ -10,6 +10,7 @@ public interface ProdutoService {
 
     List<Produto> consultar();
     Produto consultar(UUID id);
+    List<Produto> consultar(List<UUID> ids);
     Produto cadastrar(ProdutoModel model);
     Produto alterar(UUID id, ProdutoModel model);
     Produto remover(UUID id);
