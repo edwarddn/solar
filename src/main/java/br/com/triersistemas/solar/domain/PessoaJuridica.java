@@ -20,7 +20,7 @@ public abstract class PessoaJuridica extends Pessoa {
 
     public PessoaJuridica editar(final String nome, final LocalDate aniver, final String cnpj) {
         super.editar(nome, aniver);
-        this.cnpj = cnpj;
+        this.cnpj = StringUtils.extractNumbers(cnpj);
         return this;
     }
 
