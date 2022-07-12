@@ -2,14 +2,18 @@ package br.com.triersistemas.solar.domain;
 
 import br.com.triersistemas.solar.helper.StringUtils;
 
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
+@MappedSuperclass
 public abstract class Pessoa {
 
+    @Id
     private UUID id;
     private String nome;
     private LocalDate aniver;
@@ -40,11 +44,15 @@ public abstract class Pessoa {
         return nome;
     }
 
-    public String getAniver() {
+    public String getAniverString() {
         if (Objects.nonNull(this.aniver)) {
             return this.aniver.format(DateTimeFormatter.ISO_LOCAL_DATE);
         }
         return "";
+    }
+
+    public LocalDate getAniver() {
+        return aniver;
     }
 
     public Long getIdade() {

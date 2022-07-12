@@ -1,6 +1,5 @@
 package br.com.triersistemas.solar.service;
 
-import br.com.triersistemas.solar.domain.Farmaceutico;
 import br.com.triersistemas.solar.model.FarmaceuticoModel;
 
 import java.util.List;
@@ -8,15 +7,15 @@ import java.util.UUID;
 
 public interface FarmaceuticoService {
 
-    List<Farmaceutico> consultar();
+    List<FarmaceuticoModel> consultar();
 
-    Farmaceutico consultar(UUID id);
+    FarmaceuticoModel consultar(UUID id);
 
-    Farmaceutico cadastrar(FarmaceuticoModel model);
+    FarmaceuticoModel cadastrar(FarmaceuticoModel model);
 
-    Farmaceutico cadastrarRandom();
+    FarmaceuticoModel cadastrarRandom();
 
-    Farmaceutico alterar(UUID id, FarmaceuticoModel model);
+    FarmaceuticoModel alterar(FarmaceuticoModel model);
 
-    Farmaceutico remover(UUID id);
+    FarmaceuticoModel remover(UUID id);
 }

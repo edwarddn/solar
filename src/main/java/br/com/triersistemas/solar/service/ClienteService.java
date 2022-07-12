@@ -8,13 +8,13 @@ import java.util.UUID;
 
 public interface ClienteService {
 
-    List<Cliente> consultar();
+    List<ClienteModel> consultar();
 
-    Cliente consultar(UUID id);
+    ClienteModel consultar(UUID id);
 
-    Cliente cadastrar(ClienteModel model);
+    ClienteModel cadastrar(ClienteModel model);
 
-    Cliente alterar(UUID id, ClienteModel model);
+    ClienteModel alterar(ClienteModel model);
 
-    Cliente remover(UUID id);
+    ClienteModel remover(UUID id);
 }

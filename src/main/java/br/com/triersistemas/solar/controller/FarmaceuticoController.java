@@ -18,27 +18,32 @@ public class FarmaceuticoController {
     private FarmaceuticoService farmaceuticoService;
 
     @GetMapping("/consultar")
-    public List<Farmaceutico> consultar() {
+    public List<FarmaceuticoModel> consultar() {
         return farmaceuticoService.consultar();
     }
 
+    @GetMapping("/consultar/{id}")
+    public FarmaceuticoModel consultar(@PathVariable UUID id) {
+        return farmaceuticoService.consultar(id);
+    }
+
     @PostMapping("/cadastrar-random")
-    public Farmaceutico cadastrarRandom() {
+    public FarmaceuticoModel cadastrarRandom() {
         return farmaceuticoService.cadastrarRandom();
     }
 
     @PostMapping("/cadastrar")
-    public Farmaceutico cadastrar(@Valid @RequestBody FarmaceuticoModel model) {
+    public FarmaceuticoModel cadastrar(@Valid @RequestBody FarmaceuticoModel model) {
         return farmaceuticoService.cadastrar(model);
     }
 
-    @PutMapping("/alterar/{id}")
-    public Farmaceutico alterar(@PathVariable UUID id, @Valid @RequestBody FarmaceuticoModel model) {
-        return farmaceuticoService.alterar(id, model);
+    @PutMapping("/alterar")
+    public FarmaceuticoModel alterar(@Valid @RequestBody FarmaceuticoModel model) {
+        return farmaceuticoService.alterar(model);
     }
 
     @DeleteMapping("/remover/{id}")
-    public Farmaceutico remover(@PathVariable UUID id) {
+    public FarmaceuticoModel remover(@PathVariable UUID id) {
         return farmaceuticoService.remover(id);
     }
 }

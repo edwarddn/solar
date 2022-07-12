@@ -17,22 +17,27 @@ public class ClienteController {
     private ClienteService clienteService;
 
     @GetMapping("/consultar")
-    public List<Cliente> consultar() {
+    public List<ClienteModel> consultar() {
         return clienteService.consultar();
     }
 
+    @GetMapping("/consultar/{id}")
+    public ClienteModel consultarPorId(@PathVariable UUID id) {
+        return clienteService.consultar(id);
+    }
+
     @PostMapping("/cadastrar")
-    public Cliente cadastrar(@RequestBody ClienteModel model) {
+    public ClienteModel cadastrar(@RequestBody ClienteModel model) {
         return clienteService.cadastrar(model);
     }
 
-    @PutMapping("/alterar/{id}")
-    public Cliente alterar(@PathVariable UUID id, @RequestBody ClienteModel model) {
-        return clienteService.alterar(id, model);
+    @PutMapping("/alterar")
+    public ClienteModel alterar(@RequestBody ClienteModel model) {
+        return clienteService.alterar(model);
     }
 
     @DeleteMapping("/remover/{id}")
-    public Cliente remover(@PathVariable UUID id) {
+    public ClienteModel remover(@PathVariable UUID id) {
         return clienteService.remover(id);
     }
 }

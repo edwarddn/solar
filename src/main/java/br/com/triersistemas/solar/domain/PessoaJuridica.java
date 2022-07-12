@@ -2,9 +2,11 @@ package br.com.triersistemas.solar.domain;
 
 import br.com.triersistemas.solar.helper.StringUtils;
 
+import javax.persistence.MappedSuperclass;
 import java.time.LocalDate;
 import java.util.List;
 
+@MappedSuperclass
 public abstract class PessoaJuridica extends Pessoa {
 
     private String cnpj;
