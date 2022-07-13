@@ -19,22 +19,22 @@ public class PedidoController {
     private PedidoService pedidoService;
 
     @GetMapping("/consultar")
-    public List<Pedido> consultar() {
+    public List<PedidoModel> consultar() {
         return pedidoService.consultar();
     }
 
     @PostMapping("/cadastrar")
-    public Pedido cadastrar(@RequestBody PedidoModel model) {
+    public PedidoModel cadastrar(@RequestBody PedidoModel model) {
         return pedidoService.cadastrar(model);
     }
 
     @PutMapping("/adicionar-produtos/{id}")
-    public Pedido adicionarProdutos(@PathVariable UUID id, @RequestBody AdicionarPedidoModel model) {
+    public PedidoModel adicionarProdutos(@PathVariable UUID id, @RequestBody AdicionarPedidoModel model) {
         return pedidoService.adicionarProdutos(id, model);
     }
 
     @PutMapping("/pagar/{id}")
-    public Pedido pagar(@PathVariable UUID id, @RequestBody PagarPedidoModel model) {
+    public PedidoModel pagar(@PathVariable UUID id, @RequestBody PagarPedidoModel model) {
         return pedidoService.pagar(id, model);
     }
 }

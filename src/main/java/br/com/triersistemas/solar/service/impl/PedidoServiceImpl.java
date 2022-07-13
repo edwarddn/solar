@@ -16,6 +16,7 @@ import br.com.triersistemas.solar.service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,44 +27,47 @@ public class PedidoServiceImpl implements PedidoService {
     private PedidoRepository pedidoRepository;
 
     @Autowired
-    private FarmaceuticoService farmaceuticoService;
+    private FarmaceuticoServiceImpl farmaceuticoService;
 
     @Autowired
-    private ClienteService clienteService;
+    private ClienteServiceImpl clienteService;
 
     @Autowired
-    private ProdutoService produtoService;
+    private ProdutoServiceImpl produtoServiceImpl;
 
     @Override
-    public List<Pedido> consultar() {
-        return pedidoRepository.consultar();
+    public List<PedidoModel> consultar() {
+        return pedidoRepository.findAll().stream().map(PedidoModel::new).toList();
     }
 
     @Override
-    public Pedido consultar(UUID id) {
-        return pedidoRepository.consultar(id).orElseThrow(NaoExisteException::new);
+    public PedidoModel consultar(UUID id) {
+        return new PedidoModel(this.buscarPorId(id));
     }
 
     @Override
-    public Pedido cadastrar(PedidoModel model) {
-        Farmaceutico farmaceutico = new Farmaceutico(farmaceuticoService.consultar(model.getIdFarmaceutico()));
-        Cliente cliente = new Cliente(clienteService.consultar(model.getIdCliente()));
+    public PedidoModel cadastrar(PedidoModel model) {
+        Farmaceutico farmaceutico = farmaceuticoService.consultarFarmaceutico(model.getIdFarmaceutico());
+        Cliente cliente = clienteService.consultarCliente(model.getIdCliente());
         Pedido pedido = new Pedido(farmaceutico, cliente);
-        pedidoRepository.cadastrar(pedido);
-        return pedido;
+        return new PedidoModel(pedidoRepository.save(pedido));
     }
 
     @Override
-    public Pedido adicionarProdutos(UUID id, AdicionarPedidoModel model) {
-        Pedido pedido = this.consultar(id);
-        List<Produto> produtos = produtoService.consultar(model.getIdProdutos());
-        return pedido.adicionarProdutos(produtos);
+    public PedidoModel adicionarProdutos(UUID id, AdicionarPedidoModel model) {
+        Pedido pedido = this.buscarPorId(id);
+        List<Produto> produtos = produtoServiceImpl.consultarProdutos(model.getIdProdutos());
+        return new PedidoModel(pedidoRepository.save(pedido.adicionarProdutos(produtos)));
     }
 
     @Override
-    public Pedido pagar(UUID id, PagarPedidoModel model) {
-        Pedido pedido = this.consultar(id);
+    public PedidoModel pagar(UUID id, PagarPedidoModel model) {
+        Pedido pedido = this.buscarPorId(id);
         pedido.pagar(model.getValor());
-        return pedido;
+        return new PedidoModel(pedido);
+    }
+
+    private Pedido buscarPorId(UUID id) {
+        return pedidoRepository.findById(id).orElseThrow(NaoExisteException::new);
     }
 }

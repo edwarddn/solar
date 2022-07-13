@@ -27,6 +27,10 @@ public class FarmaceuticoServiceImpl implements FarmaceuticoService {
         return new FarmaceuticoModel(this.buscarFarmaceuticoPorId(id));
     }
 
+    protected Farmaceutico consultarFarmaceutico(UUID id) {
+        return this.buscarFarmaceuticoPorId(id);
+    }
+
     @Override
     public FarmaceuticoModel cadastrar(FarmaceuticoModel model) {
         Farmaceutico farmaceutico = new Farmaceutico(model);
